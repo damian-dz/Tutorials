@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hideable Sidebar</title>
+
+    <style>
+        body {
+            margin: 0;
+        }
+
+        main {
+            background-color: bisque;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: row;
+            overflow-x: hidden;
+        }
+
+        :root {
+            --sidebar-width: 400;
+            --transition-props: 0.5s ease-in-out;
+        }
+
+        .sidebar {
+            background-color: aqua;
+            min-width: calc(var(--sidebar-width) * 1px);
+            max-width: calc(var(--sidebar-width) * 1px);
+            transition: var(--transition-props);
+        }
+
+        .sidebar.hidden {
+            margin-left: calc(var(--sidebar-width) * -1px);
+            transition: var(--transition-props);
+        }
+
+        .workspace {
+            background-color: yellow;
+            flex-grow: 1;
+        }
+
+        .hide-show-btn {
+            position: absolute;
+            background-color: greenyellow;
+            height: 36px;
+            width: 36px;
+            border-bottom-right-radius: 4px;
+            padding: 4px;
+        }
+
+        .hide-show-btn:hover {
+            cursor: pointer;
+            opacity: 0.9;
+        }
+
+        .arrow {
+            transition: var(--transition-props);
+        }
+
+        .arrow.reversed {
+            transform: rotate(180deg);
+            transition: var(--transition-props);
+        }
+
+
+    </style>
+
+</head>
+<body>
+    
+    <main>
+        <div class="hide-show-btn" onclick="hideOrShowSidebar()">
+            <svg class="arrow" viewBox="-10 -10 120 120">
+                <polyline points="50,0 0,50 50,100" />
+            </svg>
+        </div>
+        <nav class="sidebar"></nav>
+        <section class="workspace"></section>
+    </main>
+
+<script>
+    function hideOrShowSidebar() {
+        let arrow = document.querySelector('.arrow');
+        let sidebar = document.querySelector('.sidebar');
+        arrow.classList.toggle('reversed');
+        sidebar.classList.toggle('hidden');
+    }
+</script>
+
+</body>
+</html>
