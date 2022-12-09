@@ -1,0 +1,13 @@
+﻿@page "/"
+
+<div class="hide-show-btn" @onclick=@(() => _isSidebarShown = !_isSidebarShown)>
+    <svg class="arrow@(_isSidebarShown ? "" : " reversed")" viewBox="-10 -10 120 120">
+        <polyline points="50,0 0,50 50,100" />
+    </svg>
+</div>
+<Sidebar IsShown=_isSidebarShown Width="500"></Sidebar>
+<section class="workspace"></section>
+
+@code {
+    private bool _isSidebarShown = true;
+}

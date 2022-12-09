@@ -1,0 +1,23 @@
+﻿<nav class="sidebar@(IsShown ? "" : " hidden")"></nav>
+
+@code {
+    [Parameter]
+    public bool IsShown { get; set; }
+
+    [Parameter]
+    public int Width { get; set; }
+}
+
+<style>
+    .sidebar {
+        background-color: aqua;
+        min-width:@($"{Width}px");
+        max-width: @($"{Width}px");
+        transition: var(--transition-props);
+    }
+
+        .sidebar.hidden {
+            margin-left: @($"-{Width}px");
+            transition: var(--transition-props);
+        }
+</style>

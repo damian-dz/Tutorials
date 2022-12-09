@@ -1,0 +1,27 @@
+﻿.workspace {
+    background-color: yellow;
+    flex-grow: 1;
+}
+
+.hide-show-btn {
+    position: absolute;
+    background-color: greenyellow;
+    height: 36px;
+    width: 36px;
+    border-bottom-right-radius: 4px;
+    padding: 4px;
+}
+
+    .hide-show-btn:hover {
+        cursor: pointer;
+        opacity: 0.9;
+    }
+
+.arrow {
+    transition: var(--transition-props);
+}
+
+    .arrow.reversed {
+        transform: rotate(180deg);
+        transition: var(--transition-props);
+    }
