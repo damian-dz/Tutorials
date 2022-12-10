@@ -1,0 +1,46 @@
+﻿@page "/"
+
+@implements IAsyncDisposable
+@inject IJSRuntime JS
+
+<div role="status">Width: @_width px Height: @_height px</div>
+<textarea @ref=_textArea></textarea>
+
+@code {
+    private int _width, _height;
+
+    private DotNetObjectReference<Index>? _selfRef;
+    private ElementReference _textArea;
+
+    private IJSObjectReference? _jsModule;
+    private IJSInProcessObjectReference? _jsipInstance;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+        _jsModule = await JS.InvokeAsync<IJSObjectReference>("import", "./index.js");
+        if (_jsModule == null)
+            return;
+        _selfRef = DotNetObjectReference.Create(this);
+        _jsipInstance = await _jsModule.InvokeAsync<IJSInProcessObjectReference>(
+            "createInstance", _selfRef, _textArea);
+    }
+
+    [JSInvokable]
+    public void TextAreaResized(int width, int height)
+    {
+        _width = width;
+        _height = height;
+        StateHasChanged();
+    }
+
+    async ValueTask IAsyncDisposable.DisposeAsync()
+    {
+        if (_jsModule != null)
+            await _jsModule.DisposeAsync();
+        if (_jsipInstance != null)
+            await _jsipInstance.DisposeAsync();
+    }
+
+}
