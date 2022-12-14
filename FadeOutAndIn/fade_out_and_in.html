@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fade Out and In</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        main {
+            background-color: antiquewhite;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+        }
+
+        .box {
+            border: 1px solid red;
+            flex-grow: 1;
+        }
+
+        #first {
+            background-color: aquamarine;
+        }
+
+        #second {
+            background-color: coral;
+            display: none;
+        }
+
+        @keyframes fade-out {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    
+    <main>
+        <div class="box"></div>
+        <div class="box" id="first" onclick="showSecond(this)"></div>
+        <div class="box" id="second" onclick="showFirst(this)"></div>
+        <div class="box"></div>
+    </main>
+
+    <script>
+        async function showSecond(target) {
+            let second = document.getElementById('second');
+            await fadeOut(target);
+            await fadeIn(second);
+        }
+
+        async function showFirst(target) {
+            let first = document.getElementById('first');
+            await fadeOut(target);
+            await fadeIn(first);
+        }
+
+        function fadeOut(target, duration = 500) {
+            return new Promise(resolve => {
+                const animationEnded = () => {
+                    target.style.display = 'none';
+                    target.onanimationend = null;
+                    target.style.animation = null;
+                    resolve();
+                };
+                target.onanimationend = animationEnded;
+                target.style.animation = `fade-out ${duration}ms 1`;
+            });
+        }
+
+        function fadeIn(target, duration = 500, display = 'block') {
+            return new Promise(resolve => {
+                const animationEnded = () => {
+                    target.onanimationend = null;
+                    target.style.animation = null;
+                    resolve();
+                };
+                target.onanimationend = animationEnded;
+                target.style.display = display;
+                target.style.animation = `fade-in ${duration}ms 1`;
+            });
+        }
+    </script>
+</body>
+</html>
