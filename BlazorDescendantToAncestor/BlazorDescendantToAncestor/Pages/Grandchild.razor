@@ -1,0 +1,12 @@
+﻿@inject IndexState State
+
+<div style="background-color:azure; padding:20px"
+    @onclick="@(() => State.GrandchildClicked("Grandchild says hi."))"
+    @onclick:preventDefault
+    @onclick:stopPropagation>
+    Grandchild
+</div>
+
+@code {
+
+}

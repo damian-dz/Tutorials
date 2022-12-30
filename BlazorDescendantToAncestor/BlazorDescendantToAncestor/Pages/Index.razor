@@ -1,0 +1,27 @@
+﻿@page "/"
+
+@implements IDisposable
+
+@inject IndexState State
+
+<div style="background-color:antiquewhite; padding:20px">
+    Index
+    <Child></Child>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        State.OnGrandchildClick += DisplayMessage;
+    }
+
+    private void DisplayMessage(string text)
+    {
+        Console.WriteLine(text);
+    }
+
+    public void Dispose()
+    {
+        State.OnGrandchildClick -= DisplayMessage;
+    }
+}
