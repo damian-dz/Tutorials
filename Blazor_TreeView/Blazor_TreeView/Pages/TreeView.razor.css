@@ -1,0 +1,23 @@
+﻿.item {
+    display: flex;
+    margin: 0;
+    list-style-type: none;
+    cursor: pointer;
+}
+
+.item:hover {
+    background-color: azure;
+}
+
+.item.selected {
+    background-color: lightblue;
+}
+
+.item > .arrow, .arrow-placeholder {
+    min-width: 16px;
+    user-select: none;
+}
+
+.item > .arrow:hover {
+    color: steelblue;
+}

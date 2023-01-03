@@ -1,0 +1,26 @@
+﻿@page "/"
+
+<ul class="tree-view">
+    <TreeView Items="@_sampleData" OnSelect="item => Console.WriteLine(item.Text)"></TreeView>
+</ul>
+
+@code {
+    private List<TreeViewItem> _sampleData = new List<TreeViewItem>()
+    {
+        new TreeViewItem("Item 1", new List<TreeViewItem>()
+        {
+            new TreeViewItem("Item 1.1"),
+            new TreeViewItem("Item 1.2", new List<TreeViewItem>()
+            {
+                new TreeViewItem("Item 1.2.1", new List<TreeViewItem>()
+                {
+                    new TreeViewItem("Item 1.2.1.1"),
+                    new TreeViewItem("Item 1.2.1.2"),
+                    new TreeViewItem("Item 1.2.1.3")
+                })
+            }),
+            new TreeViewItem("Item 1.3")
+        }),
+        new TreeViewItem("Item 2")
+    };
+}
