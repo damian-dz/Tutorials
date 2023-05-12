@@ -1,0 +1,40 @@
+﻿@page "/"
+
+
+<div class="container">
+    @for (int i = 0; i < _selections.Count; i++)
+    {
+        <SelectableComponent Idx=@i IsSelected=@_selections[i] 
+            OnMouseDown="HandleMouseDown"
+            OnMouseEnter="HandleMouseEnter"
+            OnMouseUp="HandleMouseUp" />
+    }
+</div>
+
+@code {
+    private List<bool> _selections = null!;
+
+    private bool _isBeingSelected;
+    
+    protected override void OnInitialized()
+    {
+        _selections = new List<bool>(Enumerable.Repeat(false, 10));
+    }
+
+    private void HandleMouseDown(int idx)
+    {
+        _selections[idx] = !_selections[idx];
+        _isBeingSelected = true;
+    }
+
+    private void HandleMouseEnter(int idx)
+    {
+        if (_isBeingSelected)
+            _selections[idx] = !_selections[idx];
+    }
+
+    private void HandleMouseUp()
+    {
+        _isBeingSelected = false;
+    }
+}

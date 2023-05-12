@@ -1,0 +1,48 @@
+
+<div class="@GetClassName()"
+    @onmousedown="HandleMouseDown"
+    @onmouseenter="HandleMouseEnter"
+    @onmouseup="HandleMouseUp">
+    Selectable Component @((Idx + 1).ToString())
+</div>
+
+@code {
+    [Parameter]
+    public int Idx { get; set; }
+
+    [Parameter]
+    public bool IsSelected { get; set; }
+
+    [Parameter]
+    public EventCallback<int> OnMouseDown { get; set; }
+
+    [Parameter]
+    public EventCallback<int> OnMouseEnter { get; set; }
+
+    [Parameter]
+    public EventCallback OnMouseUp { get; set; }
+
+    private string GetClassName()
+    {
+        string selected = IsSelected ? " selected" : "";
+        return $"selectable{selected}";
+    }
+
+    private async Task HandleMouseDown(MouseEventArgs e)
+    {
+        if (e.CtrlKey && e.Button == 0)
+            await OnMouseDown.InvokeAsync(Idx);
+    }
+
+    private async Task HandleMouseEnter(MouseEventArgs e)
+    {
+        if (e.CtrlKey && e.Button == 0)
+            await OnMouseEnter.InvokeAsync(Idx);
+    }
+
+    private async Task HandleMouseUp()
+    {
+        await OnMouseUp.InvokeAsync();
+    }
+
+}

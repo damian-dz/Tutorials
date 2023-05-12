@@ -1,0 +1,8 @@
+.selectable {
+    padding: 10px;
+    border: 1px dashed blue;
+}
+
+.selected {
+    background-color: aqua;
+}
